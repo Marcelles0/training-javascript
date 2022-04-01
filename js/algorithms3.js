@@ -1,6 +1,93 @@
 //Functions
 const randomNumber = (max,min) =>
-        Math.floor(Math.random()*(max-min+1) + min);
+    Math.floor(Math.random()*(max-min+1) + min);
+
+
+const comprobarDNI =(dni,valid) => {
+    // creamos una array con los valores ASCII posibles en funcion del resto
+    let arrayDNI = [84, 82, 87, 65, 71, 77, 89, 70, 80, 68, 88, 66, 78, 74, 90, 83, 81, 86, 72, 76, 67, 75, 69];
+    if (dni.length == 9) {
+        if (48 <= dni.charCodeAt(0) <= 57) {
+            // comprobar que el último caracter es una letra mayuscula
+            if (65 <= dni.charCodeAt(dni.length -1) <= 90) {
+                // comprobar que todos los caracteres sean correctos
+                if (dni.charCodeAt(1) >= 48 &&
+                dni.charCodeAt(1) <= 57 &&
+                dni.charCodeAt(2) >= 48 &&
+                dni.charCodeAt(2) <= 57 &&
+                dni.charCodeAt(3) >= 48 &&
+                dni.charCodeAt(3) <= 57 &&
+                dni.charCodeAt(4) >= 48 &&
+                dni.charCodeAt(4) <= 57 &&
+                dni.charCodeAt(5) >= 48 &&
+                dni.charCodeAt(5) <= 57 &&
+                dni.charCodeAt(6) >= 48 &&
+                dni.charCodeAt(6) <= 57 &&
+                dni.charCodeAt(7) >= 48 &&
+                dni.charCodeAt(7) <= 57 &&
+                dni.charCodeAt(8) >= 65 &&
+                dni.charCodeAt(8) <= 90) {
+                    // DNI correct
+                    let numsDNI = dni.slice(0,8);
+                    let rest = numsDNI%23;
+                    // comprobamos que el resto y la letra correspondiente coincidan
+                    if ((rest == 0 && dni.charCodeAt(8) == arrayDNI[rest]) ||
+                        (rest == 1 && dni.charCodeAt(8) == arrayDNI[rest]) ||
+                        (rest == 2 && dni.charCodeAt(8) == arrayDNI[rest]) ||
+                        (rest == 3 && dni.charCodeAt(8) == arrayDNI[rest]) ||
+                        (rest == 4 && dni.charCodeAt(8) == arrayDNI[rest]) ||
+                        (rest == 5 && dni.charCodeAt(8) == arrayDNI[rest]) ||
+                        (rest == 6 && dni.charCodeAt(8) == arrayDNI[rest]) ||
+                        (rest == 7 && dni.charCodeAt(8) == arrayDNI[rest]) ||
+                        (rest == 8 && dni.charCodeAt(8) == arrayDNI[rest]) ||
+                        (rest == 9 && dni.charCodeAt(8) == arrayDNI[rest]) ||
+                        (rest == 10 && dni.charCodeAt(8) == arrayDNI[rest]) ||
+                        (rest == 11 && dni.charCodeAt(8) == arrayDNI[rest]) ||
+                        (rest == 12 && dni.charCodeAt(8) == arrayDNI[rest]) ||
+                        (rest == 13 && dni.charCodeAt(8) == arrayDNI[rest]) ||
+                        (rest == 14 && dni.charCodeAt(8) == arrayDNI[rest]) ||
+                        (rest == 15 && dni.charCodeAt(8) == arrayDNI[rest]) ||
+                        (rest == 16 && dni.charCodeAt(8) == arrayDNI[rest]) ||
+                        (rest == 17 && dni.charCodeAt(8) == arrayDNI[rest]) ||
+                        (rest == 18 && dni.charCodeAt(8) == arrayDNI[rest]) ||
+                        (rest == 19 && dni.charCodeAt(8) == arrayDNI[rest]) ||
+                        (rest == 20 && dni.charCodeAt(8) == arrayDNI[rest]) ||
+                        (rest == 21 && dni.charCodeAt(8) == arrayDNI[rest]) ||
+                        (rest == 22 && dni.charCodeAt(8) == arrayDNI[rest])){
+                            valid = true;
+                            console.log("Valid DNI");
+                    }else {
+                        console.log("This letter don't coincide with a valid DNI");
+                        valid = false;
+                    }
+                } else{
+                    //DNI wrong
+                    console.log("Please enter a valid DNI");
+                    valid = false;
+                }
+            }
+        }else {
+            // No valid DNI
+            console.log("Please enter a valid data");
+            valid = false;
+        }
+    }else{
+        // length != 9
+        console.log("Please enter a valid data");
+        valid = false;
+    }
+}
+
+
+// const antiError = (ask) =>{
+//     for (let i = 0; i < 1; i++) {
+//         ask = parseInt(prompt("How many plates do you want?"));
+//         if (ask < 0) {
+//             alert("You need a positive number");
+//             i--;
+//         }
+//     }
+// }
 
 
 //--------------------------------------------------------------------------------------
@@ -87,43 +174,86 @@ function exercise3() {
 //--------------------------------------------------------------------------------------
 //Ejercicio 4
 
-exercise4();
+// exercise4();
 function exercise4() {
+    // pedimos un DNI
     let dni = prompt("Enter a valid DNI");
-    if (dni.length == 9) {
-        if (48 <= dni.charCodeAt(0) <= 57) {
-            // comprobar que el último caracter es una letra mayuscula
-            if (65 <= dni.charCodeAt(dni.length -1) <= 90) {
-                // comprobar que todos los caracteres sean correctos
-                if (dni.charCodeAt(1) >= 48 &&
-                dni.charCodeAt(1) <= 57 &&
-                dni.charCodeAt(2) >= 48 &&
-                dni.charCodeAt(2) <= 57 &&
-                dni.charCodeAt(3) >= 48 &&
-                dni.charCodeAt(3) <= 57 &&
-                dni.charCodeAt(4) >= 48 &&
-                dni.charCodeAt(4) <= 57 &&
-                dni.charCodeAt(5) >= 48 &&
-                dni.charCodeAt(5) <= 57 &&
-                dni.charCodeAt(6) >= 48 &&
-                dni.charCodeAt(6) <= 57 &&
-                dni.charCodeAt(7) >= 48 &&
-                dni.charCodeAt(7) <= 57 &&
-                dni.charCodeAt(8) >= 65 &&
-                dni.charCodeAt(8) <= 90) {
-                    // DNI correct
-                    console.log("Valid DNI")
-                } else{
-                    //DNI wrong
-                    console.log("Please enter a valid DNI");
-                }
+    // variable valid innecesaria?
+    let valid = true;
+    // le pasamos el DNI a la funcion para que lo compruebe
+    comprobarDNI(dni,valid);
+    console.log(dni);
+    //Bonus--------------------
+    // generateDNI();
+    function generateDNI(){
+        let arrayDNI = [84, 82, 87, 65, 71, 77, 89, 70, 80, 68, 88, 66, 78, 74, 90, 83, 81, 86, 72, 76, 67, 75, 69];
+        let ask = 0;
+        // preguntamos cuantos DNI quiere
+        for (let i = 0; i < 1; i++) {
+            ask = parseInt(prompt("How many DNIs do you want?"));
+            if (ask < 0) {
+                alert("You need a positive number");
+                i--;
             }
-        }else {
-            // No valid DNI
-            console.log("Please enter a valid data");
         }
-    }else{
-        // length != 9
-        console.log("Please enter a valid data");
+        // generamos numeros aleatrios de 8 digitos
+        for (let i = 0; i < ask; i++) {
+            let dniRandom = randomNumber(max=99999999,min=0);
+            let letter = dniRandom%23;
+            // generamos una letra en funcion del resto del numero generado
+            dniRandom += String.fromCharCode(arrayDNI[letter]);
+            // lo comprobamos con la funcion
+            comprobarDNI(dniRandom,valid);
+            if (valid == true) {
+                console.log(dniRandom);
+            }else{
+                i--;
+            }
+        }
     }
+}
+
+//--------------------------------------------------------------------------------------
+//Ejercicio 5
+
+// exercise5();
+function exercise5(){
+    //preguntamos cuantas matriculas 
+    let ask = 0;
+    for (let i = 0; i < 1; i++) {
+        ask = parseInt(prompt("How many plates do you want?"));
+        if (ask < 0) {
+            alert("You need a positive number");
+            i--;
+        }
+    }
+    // generamos los 4 numeros
+    for (let i = 0; i < ask; i++) {
+        let matricula = "";
+        for (let j = 0; j < 4; j++) {
+            matricula += String.fromCharCode(randomNumber(max=57,min=48));
+        }
+        //generamos las 3 letras
+        for (let j = 0; j < 3; j++) {
+            let letter = randomNumber(max=90,min=66);
+            if (letter != 69 &&
+                letter != 73 &&
+                letter != 79 &&
+                letter != 81 &&
+                letter != 85) {
+                    matricula += String.fromCharCode(letter);
+            }else{
+                j--;
+            }
+        }
+        console.log(matricula);
+    }
+}
+
+//--------------------------------------------------------------------------------------
+//Ejercicio 6
+
+exercise6();
+function exercise6(){
+    
 }
