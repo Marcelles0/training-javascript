@@ -89,6 +89,52 @@ const comprobarDNI =(dni,valid) => {
 //     }
 // }
 
+const cartaRandom = (carta0, palos0, carta1, palos1, clubs, palos) => {
+    carta0 = randomNumber(max=12, min=0);
+    palos0 = randomNumber(max=3, min=0);
+    carta1 = randomNumber(max=12, min=0);
+    palos1 = randomNumber(max=3, min=0);
+    while (carta0 == carta1 && palos0 == palos1) {
+        carta1 = randomNumber(max=12, min=0);
+        palos1 = randomNumber(max=3, min=0);
+    }
+    console.log(carta0, palos0, carta1, palos1);
+    console.log(clubs[carta0], palos[palos0], clubs[carta1], palos[palos1]);
+    return {
+        carta0:carta0,
+        palos0:palos0,
+        carta1:carta1,
+        palos1:palos1,
+    };
+}
+
+const playGame = (carta0, palos0, carta1, palos1, palos, ask, play, clubs, cards) =>{
+    console.log(`The House -> ${clubs[cards.carta0]} of ${palos[cards.palos0]}`);
+    console.log(`The Player -> ${clubs[cards.carta1]} of ${palos[cards.palos1]}`);
+    if (cards.carta0 < cards.carta1) {
+        alert("You lose \nMore luke next time");
+    } else if (cards.carta0 > cards.carta1) {
+        alert("You Win!");
+    }else{
+        alert("Draw");
+    }
+    for (let i = 0; i < 1; i++) {
+        ask = prompt("You want to play again? \n'y' -> yes \n'n' -> no");
+        if (ask == "y") {
+            play = true;
+        }else if (ask == "n") {
+            play = false;
+        }else{
+            alert("Please, enter a valid answer");
+            i--;
+        }
+    }
+    return{
+        play: play,
+
+    }
+}
+
 
 //--------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------
@@ -253,7 +299,79 @@ function exercise5(){
 //--------------------------------------------------------------------------------------
 //Ejercicio 6
 
-exercise6();
+// exercise6();
 function exercise6(){
+    // creamos un array con las citas
+    let citas = ["“Por la izquierda”",
+        "“¿Has oído hablar de la iniciativa vengadores?”",
+        "“No tengo nada que demostrarte”",
+        "“Es un amigo del trabajo”",
+        "“Si no podemos proteger la Tierra, puedes estar seguro de que la vengaremos”",
+        "“Soy inevitable”",
+        "“Dormammu, he venido a negociar. Dormammu, he venido a negociar. Dormammu, he venido a negociar.”",
+        "“El sol se está poniendo”",
+        "“Ese es mi secreto, Capi. Siempre estoy enfadado”",
+        "“Cueste lo que cueste”",
+        "“El precio de la libertad es caro. Siempre lo ha sido. Pero es un precio que estoy dispuesto a pagar”",
+        "“Glorioso propósito”",
+        "“Todo”",
+        "“Nosotros somos Groot”",
+        "“Si atraviesas esa puerta, eres una vengadora”",
+        "“Es adoptado”",
+        "“Tenemos un Hulk”",
+        "“Puedo hacer esto todo el día”",
+        "“Vengadores, reuníos”",
+        "“Yo soy Iron Man”",];
     
+    // generamos una función para que el número aleatorio cambie
+    const generate =() =>
+        randomNumber(max = 19, min = 0);
+    // repetir con el intervalo de 2 segundos
+    let timerId = setInterval(() => console.log(citas[generate()]), 10000);
+
+    // después de 5 segundos parar
+    setTimeout(() => { clearInterval(timerId); console.log('stop'); }, 180000);
+}
+
+
+//--------------------------------------------------------------------------------------
+//Ejercicio 7
+
+// exercise7();
+function exercise7(){
+    let array = new Array (100);
+    for (let i = 0; i < 100; i++) {
+        array[i] = randomNumber(max=500, min=0);
+    }
+    console.log(array);
+}
+
+//--------------------------------------------------------------------------------------
+//Ejercicio 8
+
+exercise8();
+function exercise8(){
+    let clubs = hearts = spades = diamonds = ["ACE","KING","QUEEN","JACK",10,9,8,7,6,5,4,3,2];
+    let palos = ["clubs","hearts","spades","diamonds"];
+    let saldo = 500;
+    let carta0, carta1, palos0, palos1;
+    let play = true;
+    let win;
+    let ask;
+    
+    let cards = cartaRandom(carta0, palos0, carta1, palos1, clubs, palos);
+    console.log(clubs[cards.carta0], palos[cards.palos0], clubs[cards.carta1], palos[cards.palos1]);
+    while (play == true) {
+        let continious = playGame(carta0, palos0, carta1, palos1, palos, win, ask, play, clubs, cards);
+        if (continious.play == false) {
+            play = false;
+        }
+    }
+
+    /* for (let i = 0; i < 2; i++) {
+        x = (`carta${i}`);
+        console.log(x);
+        x = diamonds[randomNumber(max=12,min=0)];
+        console.log(x);
+    } */
 }
