@@ -344,12 +344,15 @@ function exercise7(){
         array[i] = randomNumber(max=500, min=0);
     }
     console.log(array);
+    array = array.filter((arrayNum) => arrayNum % 2 == 0);
+    array.sort((a, b) => b - a);
+    console.log(array);
 }
 
 //--------------------------------------------------------------------------------------
 //Ejercicio 8
 
-exercise8();
+// exercise8();
 function exercise8(){
     let clubs = hearts = spades = diamonds = ["ACE","KING","QUEEN","JACK",10,9,8,7,6,5,4,3,2];
     let palos = ["clubs","hearts","spades","diamonds"];
