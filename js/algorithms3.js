@@ -362,7 +362,7 @@ function exercise7(){
 //--------------------------------------------------------------------------------------
 //Ejercicio 8
 
-exercise8();
+// exercise8();
 function exercise8(){
     let clubs = hearts = spades = diamonds = ["ACE","KING","QUEEN","JACK",10,9,8,7,6,5,4,3,2];
     let palos = ["clubs","hearts","spades","diamonds"];
