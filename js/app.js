@@ -43,7 +43,7 @@ document.querySelector("nav").insertAdjacentHTML("afterend", "<p>This is a parag
 // console.log(document.querySelector("h1").textContent);
 
 document.querySelector("h1").textContent = "Stronger together"; */
-
+/*
 let header = document.createElement("h1");
 header.append("Hello, World!");
 header.prepend("¡");
@@ -54,4 +54,15 @@ paragraph.textContent = "Writting a paragraph";
 // document.body.append(paragraph);
 document.querySelector("h1").after(paragraph);
 document.querySelector("h1").replaceWith(paragraph);
-paragraph.remove();
+paragraph.remove();*/
+
+let paragraph = document.querySelector("p");
+paragraph.style.textAlign = "center";
+paragraph.style.textTransform = "capitalize";
+paragraph.style.backgroundColor = "black";
+paragraph.style.color = "white";
+paragraph.style.padding = "1em";
+paragraph.setAttribute("class", "margin");
+paragraph.setAttribute("title", "This is a paragraph");
+console.log(paragraph.getAttribute("class"));
+console.log(paragraph.style.cssText);
