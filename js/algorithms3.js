@@ -98,23 +98,31 @@ const cartaRandom = (carta0, palos0, carta1, palos1, clubs, palos) => {
         carta1 = randomNumber(max=12, min=0);
         palos1 = randomNumber(max=3, min=0);
     }
-    console.log(carta0, palos0, carta1, palos1);
-    console.log(clubs[carta0], palos[palos0], clubs[carta1], palos[palos1]);
+    // console.log(carta0, palos0, carta1, palos1);
+    // console.log(clubs[carta0], palos[palos0], clubs[carta1], palos[palos1]);
     return {
-        carta0:carta0,
-        palos0:palos0,
-        carta1:carta1,
-        palos1:palos1,
+        cartaH:carta0,
+        palosH:palos0,
+        cartaP:carta1,
+        palosP:palos1,
     };
 }
 
-const playGame = (carta0, palos0, carta1, palos1, palos, ask, play, clubs, cards) =>{
-    console.log(`The House -> ${clubs[cards.carta0]} of ${palos[cards.palos0]}`);
-    console.log(`The Player -> ${clubs[cards.carta1]} of ${palos[cards.palos1]}`);
-    if (cards.carta0 < cards.carta1) {
+const playGame = (carta0, palos0, carta1, palos1, palos, win, ask, play, clubs, bet, saldo) =>{
+    clubs = ["ACE","KING","QUEEN","JACK",10,9,8,7,6,5,4,3,2];
+    let cards = cartaRandom(carta0, palos0, carta1, palos1, clubs, palos);
+    
+        
+    // console.log(clubs[cards.cartaH], palos[cards.palosH], clubs[cards.cartaP], palos[cards.palosP]);
+
+    console.log(`The House -> ${clubs[cards.cartaH]} of ${palos[cards.palosH]}`);
+    console.log(`The Player -> ${clubs[cards.cartaP]} of ${palos[cards.palosP]}`);
+    if (cards.cartaH < cards.cartaP) {
         alert("You lose \nMore luke next time");
-    } else if (cards.carta0 > cards.carta1) {
+        win = false;
+    } else if (cards.cartaH > cards.cartaP) {
         alert("You Win!");
+        win = true;
     }else{
         alert("Draw");
     }
@@ -131,7 +139,9 @@ const playGame = (carta0, palos0, carta1, palos1, palos, ask, play, clubs, cards
     }
     return{
         play: play,
-
+        win: win,
+        bet: bet,
+        saldo: saldo,
     }
 }
 
@@ -352,7 +362,7 @@ function exercise7(){
 //--------------------------------------------------------------------------------------
 //Ejercicio 8
 
-// exercise8();
+exercise8();
 function exercise8(){
     let clubs = hearts = spades = diamonds = ["ACE","KING","QUEEN","JACK",10,9,8,7,6,5,4,3,2];
     let palos = ["clubs","hearts","spades","diamonds"];
@@ -361,15 +371,37 @@ function exercise8(){
     let play = true;
     let win;
     let ask;
+    let bet;
     
-    let cards = cartaRandom(carta0, palos0, carta1, palos1, clubs, palos);
-    console.log(clubs[cards.carta0], palos[cards.palos0], clubs[cards.carta1], palos[cards.palos1]);
-    while (play == true) {
-        let continious = playGame(carta0, palos0, carta1, palos1, palos, win, ask, play, clubs, cards);
-        if (continious.play == false) {
-            play = false;
-        }
+    // let cards = cartaRandom(carta0, palos0, carta1, palos1, clubs, palos);
+    // console.log(clubs[cards.carta0], palos[cards.palos0], clubs[cards.carta1], palos[cards.palos1]);
+    do{
+        do {
+            for (let i = 0; i < 1; i++) {
+                bet = parseInt(prompt("How many want you bet?"));
+                if (bet > saldo) {
+                    alert("You don't have this money");
+                    i--;
+                }else if (bet < 10) {
+                    alert("You have to bet more than 10");
+                    i--;
+                }
+            }
+            let continious = playGame(carta0, palos0, carta1, palos1, palos, win, ask, play, clubs, bet, saldo);
+            if (continious.play == false) {
+                play = false;
+            }
+            if (continious.win == true) {
+                saldo += continious.bet;
+            } else {
+                saldo -= continious.bet;
+                if (saldo == 0) {
+                    play = false;
+                }
+            }
+        }while (play == true) 
     }
+    while (play == true && saldo > 0) 
 
     /* for (let i = 0; i < 2; i++) {
         x = (`carta${i}`);
@@ -377,4 +409,55 @@ function exercise8(){
         x = diamonds[randomNumber(max=12,min=0)];
         console.log(x);
     } */
+}
+
+//--------------------------------------------------------------------------------------
+//Ejercicio 9
+
+// exercise9();
+function exercise9(){
+    // declaramos las variables con los datos del usuario
+    let ask = prompt("What you want, encrypt or decrypt? \ne -> Encrypt\nd -> Decrypt");
+    let msg = prompt("Write the message to encrypt");
+    let msgEn = "";
+    let x;
+    let encrypt;
+    do{
+        encrypt = parseInt(prompt("Value of the encrypt or decrypt"));
+        if (encrypt == 0 || encrypt%26 == 0) alert("No sense, was the same leter");
+    }
+    while(encrypt == 0 || encrypt%26 == 0);
+    // iniciamos la funcion con los datos recibidos
+    cypher(ask, msg, encrypt)
+    function cypher(ask,msg,encrypt) {
+        if (ask == "e") {
+            // si hay que encriptar 
+            for (let i = 0; i < msg.length; i++) {
+                x = msg.charCodeAt(i) + encrypt;
+                //en caso de ser un simbolo, dejarlo tal cual, si se pasa, volver a las letras
+                if (x - encrypt < 65 || (x - encrypt > 90 && x - encrypt < 97) || x - encrypt > 122) {
+                    x -= encrypt;
+                }else if ((x > 90 && x < (97 + encrypt)) || x > 122) {
+                    x -= 26;
+                }
+                msgEn += String.fromCharCode(x);
+            }
+            console.log(msgEn);
+        } else if (ask == "d") {
+            // si hay que desencriptar
+            for (let i = 0; i < msg.length; i++) {
+                x = msg.charCodeAt(i) - encrypt;
+                // igual que el anterior
+                if (x + encrypt < 65 || (x + encrypt > 90 && x + encrypt < 97) || x + encrypt > 122) {
+                    x += encrypt;
+                }else if ((x > (90 - encrypt) && x < 97) || x < 65) {
+                    x += 26;
+                }
+                msgEn += String.fromCharCode(x);
+            }
+            console.log(msgEn);
+        }else{// si no hay algun dato validos
+            alert("Invalid value or values entered");
+        }
+    }
 }
