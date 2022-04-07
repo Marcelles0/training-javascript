@@ -1,6 +1,8 @@
+//IMPORT
+ import {randomNumber} from "./utils.js"
 //Functions
-const randomNumber = (max,min) =>
-    Math.floor(Math.random()*(max-min+1) + min);
+// const randomNumber = (max,min) =>
+//     Math.floor(Math.random()*(max-min+1) + min);
 
 
 const comprobarDNI =(dni,valid) => {
